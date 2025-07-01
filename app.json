@@ -1,18 +1,22 @@
 {
   "expo": {
-    "name": "my-expo-app",
-    "slug": "my-expo-app",
+    "name": "PhoenixLabs",
+    "slug": "phoenixlabs",
+    "scheme": "myexpoapp",
     "version": "1.0.0",
 
     "web": {
-      "favicon": "./assets/favicon.png"
+      "favicon": "./assets/favicon.png",
+      "bundler": "metro"
     },
 
     "experiments": {
       "tsconfigPaths": true
     },
 
-    "plugins": [],
+    "plugins": [
+      "expo-router"
+    ],
 
     "orientation": "portrait",
     "icon": "./assets/icon.png",
