@@ -95,3 +95,16 @@ export interface ShipmentState {
   shipments: Shipment[];
   setShipments: (shipments: Shipment[]) => void;
 }
+
+
+export interface AlertButton {
+  text: string;
+  onPress?: () => void;
+  style?: "cancel" | "destructive" | "default";
+};
+
+export interface AlertOptions {
+  title?: string;
+  message?: string;
+  buttons?: AlertButton[];
+};

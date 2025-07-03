@@ -7,18 +7,7 @@ import {
   BackHandler,
   Platform,
 } from "react-native";
-
-type AlertButton = {
-  text: string;
-  onPress?: () => void;
-  style?: "cancel" | "destructive" | "default";
-};
-
-type AlertOptions = {
-  title?: string;
-  message?: string;
-  buttons?: AlertButton[];
-};
+import { AlertButton, AlertOptions } from "@/types/type"
 
 let showAlertFn: (options: AlertOptions) => void;
 
