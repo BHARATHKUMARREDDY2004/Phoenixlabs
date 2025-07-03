@@ -1,6 +1,5 @@
-import { Redirect, Tabs } from "expo-router";
+import { Tabs } from "expo-router";
 import { Image, Text, View } from "react-native";
-import React from "react";
 
 import { icons } from "@/constants";
 import { TabIconProps } from "@/types/type";

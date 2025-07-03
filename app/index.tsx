@@ -11,7 +11,6 @@ export default function App() {
   const token = useAuthStore((state) => state.token);
 
   useEffect(() => {
-    // Simulate checking token
     setTimeout(() => {
       setIsLoading(false);
     }, 500);

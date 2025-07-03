@@ -1,14 +1,16 @@
-import { Text, View, TouchableOpacity, ScrollView, Alert } from "react-native";
+import { Text, View, TouchableOpacity, ScrollView } from "react-native";
 import { SafeAreaView } from "react-native-safe-area-context";
 import { useAuthStore } from "@/stores/authStore";
 import { Ionicons } from "@expo/vector-icons";
+import Button from "@/components/Button"; 
+import { showCustomAlert } from '@/components/Alert'; 
 
 export default function Account() {
   const user = useAuthStore((state) => state.user);
   const clearAuthData = useAuthStore((state) => state.clearAuthData);
 
   const handleLogout = () => {
-    Alert.alert("Logout", "Are you sure you want to logout?", [
+    showCustomAlert("Logout", "Are you sure you want to logout?", [
       { text: "Cancel", style: "cancel" },
       {
         text: "Logout",
@@ -54,12 +56,13 @@ export default function Account() {
         <NavItem label="Terms & Conditions" icon="document-text-outline" />
 
         {/* Logout */}
-        <TouchableOpacity
+        <Button
+          title="Logout"
           onPress={handleLogout}
-          className="mt-6 bg-red-500 py-3 rounded-xl items-center"
-        >
-          <Text className="text-white font-semibold text-base">Logout</Text>
-        </TouchableOpacity>
+          className="mt-4"
+          textStyle="text-white"
+        > </Button>
+
 
         <View className="pb-[100px]" />
       </ScrollView>

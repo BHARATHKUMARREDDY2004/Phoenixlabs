@@ -2,41 +2,50 @@
   "expo": {
     "name": "PhoenixLabs",
     "slug": "phoenixlabs",
-    "scheme": "myexpoapp",
+    "scheme": "phoenixlabs",
     "version": "1.0.0",
-
     "web": {
       "favicon": "./assets/favicon.png",
       "bundler": "metro"
     },
-
     "experiments": {
       "tsconfigPaths": true
     },
-
     "plugins": [
       "expo-router"
     ],
-
     "orientation": "portrait",
-    "icon": "./assets/icon.png",
-
+    "icon": "./assets/logo.jpg",
     "userInterfaceStyle": "light",
-
-    "splash": {
-      "image": "./assets/splash.png",
-      "resizeMode": "contain",
-      "backgroundColor": "#ffffff"
-    },
-    "assetBundlePatterns": ["**/*"],
+"splash": {
+  "image": "./assets/logo.jpg",
+  "resizeMode": "contain",
+  "backgroundColor": "transparent"
+},
+    "assetBundlePatterns": [
+      "**/*"
+    ],
     "ios": {
-      "supportsTablet": true
-    },
-    "android": {
-      "adaptiveIcon": {
-        "foregroundImage": "./assets/adaptive-icon.png",
-        "backgroundColor": "#ffffff"
+      "supportsTablet": true,
+      "bundleIdentifier": "com.bharathkumarreddy2004.phoenixlabs",
+      "infoPlist": {
+        "ITSAppUsesNonExemptEncryption": false
       }
-    }
+    },
+"android": {
+  "adaptiveIcon": {
+    "foregroundImage": "./assets/logo.jpg",
+    "resizeMode": "contain",
+    "backgroundColor": "transparent"
+  },
+      "package": "com.bharathkumarreddy2004.phoenixlabs"
+    },
+    "extra": {
+      "router": {},
+      "eas": {
+        "projectId": "e3d4ebb0-ce9e-4c21-8097-29725fac361b"
+      }
+    },
+    "owner": "bharathkumarreddy2004"
   }
 }

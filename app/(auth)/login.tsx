@@ -1,14 +1,12 @@
-// app/login.tsx
-import React from 'react';
-import { View, Text, Pressable } from 'react-native';
+import { View, Text } from 'react-native';
 import { useRouter } from 'expo-router';
-import { Eye, EyeOff } from 'lucide-react-native';
 import Button from '@/components/Button';
 import { useForm } from 'react-hook-form';
 import { z } from 'zod';
 import { zodResolver } from '@hookform/resolvers/zod';
 import ControlledInput from '@/components/ControlledInput';
 import { useAuthStore } from '@/stores/authStore';
+import { showCustomAlert } from '@/components/Alert';
 
 const loginSchema = z.object({
   email: z.string().email('Invalid email address'),
@@ -47,7 +45,16 @@ const Login = () => {
       setAuthData(responseData.token, responseData.user);
       router.replace('/home');
     } catch (error: any) {
-      alert(error.message || 'Something went wrong');
+      showCustomAlert(
+        'Login Failed',
+        error.message || 'Something went wrong. Please try again.',
+        [
+          {
+            text: 'OK',
+            onPress: () => {},
+          },
+        ]
+      );
     }
   };
 

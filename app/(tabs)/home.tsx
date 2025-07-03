@@ -1,115 +1,123 @@
-// app/dashboard.tsx
-import React, { useEffect } from 'react';
-import { View, Text, ScrollView } from 'react-native';
-import { useRouter } from 'expo-router';
-import { useAuthStore } from '@/stores/authStore';
-import Button from '@/components/Button';
+import { View, Text, ScrollView, TouchableOpacity } from "react-native";
+import { SafeAreaView } from "react-native-safe-area-context";
+import { Ionicons } from "@expo/vector-icons";
+import { useAuthStore } from "@/stores/authStore";
+import Button from "@/components/Button";
 
-const Dashboard = () => {
-  const router = useRouter();
-  const user = useAuthStore((state) => state.user);
-  const clearAuthData = useAuthStore((state) => state.clearAuthData);
-  const token = useAuthStore((state) => state.token);
-
-  useEffect(() => {
-    if (!token) {
-      router.replace('/login');
-      return;
-    }
-
-    // Fetch dashboard data
-    const fetchDashboardData = async () => {
-      try {
-        const response = await fetch('https://phoenixlabs-server.onrender.com/api/dashboard', {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        if (!response.ok) throw new Error('Failed to fetch dashboard data');
-      } catch (error) {
-        console.error(error);
-      }
-    };
-
-
-    fetchDashboardData();
-    
-  }, [token]);
-
-  if (!user) {
-    return (
-      <View className="flex-1 items-center justify-center">
-        <Text>Loading...</Text>
+function VitalCard({
+  label,
+  value,
+  icon,
+}: {
+  label: string;
+  value: string;
+  icon: keyof typeof Ionicons.glyphMap;
+}) {
+  return (
+    <View className="w-[47%] bg-white border border-neutral-200 rounded-xl px-4 py-3">
+      <View className="flex-row items-center mb-2">
+        <Ionicons name={icon} size={20} color="#1976D2" />
+        <Text className="ml-2 text-sm text-neutral-500">{label}</Text>
       </View>
-    );
-  }
+      <Text className="text-xl font-bold text-neutral-800">{value}</Text>
+    </View>
+  );
+}
 
-    const handleLogout = () => {
-    clearAuthData();
-    router.replace('/login');
-  };
+function SectionHeader({ title }: { title: string }) {
+  return (
+    <Text className="text-lg font-semibold text-neutral-700 mt-6 mb-3">{title}</Text>
+  );
+}
+
+function MedicationStatus({ taken }: { taken: boolean }) {
+  return (
+    <View className="bg-white border border-neutral-200 rounded-xl px-4 py-3 flex-row justify-between items-center">
+      <View>
+        <Text className="text-base text-neutral-700 font-medium">
+          Morning Dose
+        </Text>
+        <Text className="text-sm text-neutral-500">Taken at 9:00 AM</Text>
+      </View>
+      <Ionicons
+        name={taken ? "checkmark-circle-outline" : "close-circle-outline"}
+        size={26}
+        color={taken ? "#07BEB8" : "#FF5252"}
+      />
+    </View>
+  );
+}
+
+function InfoCard({
+  icon,
+  title,
+  subtitle,
+}: {
+  icon: keyof typeof Ionicons.glyphMap;
+  title: string;
+  subtitle: string;
+}) {
+  return (
+    <View className="bg-white border border-neutral-200 rounded-xl px-4 py-3 mb-2 flex-row items-center">
+      <Ionicons name={icon} size={22} color="#2196F3" />
+      <View className="ml-4">
+        <Text className="text-base font-semibold text-neutral-800">{title}</Text>
+        <Text className="text-sm text-neutral-500">{subtitle}</Text>
+      </View>
+    </View>
+  );
+}
+
+export default function Home() {
+  const user = useAuthStore((state) => state.user);
 
   return (
-    <ScrollView className="flex-1 bg-neutral-50 p-6">
-      <View className="bg-white rounded-xl p-6 mb-6 shadow-sm">
-        <Text className="text-2xl font-bold text-neutral-800 mb-4">Dashboard</Text>
-        
-        <View className="mb-4">
-          <Text className="text-neutral-500 text-sm">Full Name</Text>
-          <Text className="text-neutral-800 text-lg">{user.fullName}</Text>
+    <SafeAreaView className="flex-1 bg-neutral-50 px-4 pt-4">
+      <ScrollView showsVerticalScrollIndicator={false}>
+
+        {/* Greeting */}
+        <Text className="text-2xl font-semibold text-primary-800 mb-1">
+          Hello, {user?.fullName || "Patient"}
+        </Text>
+        <Text className="text-primary-700 mb-4">Back to Phoenix Health ! </Text>
+
+        {/* Vitals Section */}
+        <SectionHeader title="Your Vitals" />
+        <View className="flex-row flex-wrap justify-between gap-3">
+          <VitalCard label="Blood Pressure" value="120/80" icon="pulse-outline" />
+          <VitalCard label="Heart Rate" value="72 bpm" icon="heart-outline" />
+          <VitalCard label="Oxygen Level" value="98%" icon="water-outline" />
+          <VitalCard label="Temperature" value="98.6°F" icon="thermometer-outline" />
         </View>
 
-        <View className="mb-4">
-          <Text className="text-neutral-500 text-sm">Patient ID</Text>
-          <Text className="text-neutral-800 text-lg">{user.patientId}</Text>
-        </View>
+        <Button
+          title="Add Today's Vitals"
+          onPress={() => {}}
+          className="mt-4"
+        />
 
-        <View className="mb-4">
-          <Text className="text-neutral-500 text-sm">Current Plan</Text>
-          <Text className="text-neutral-800 text-lg">{user.currentPlan}</Text>
-        </View>
+        {/* Medication Status */}
+        <SectionHeader title="Today's Medication" />
+        <MedicationStatus taken={true} />
 
-        <View className="mb-4">
-          <Text className="text-neutral-500 text-sm">Next Delivery Date</Text>
-          <Text className="text-neutral-800 text-lg">
-            {new Date(user.nextDeliveryDate).toLocaleDateString()}
-          </Text>
-        </View>
+        {/* Delivery Details */}
+        <SectionHeader title="Next Refill Delivery" />
+        <InfoCard
+          icon="calendar-outline"
+          title="Next Delivery Date"
+          subtitle={user?.nextDeliveryDate || "Not Scheduled"}
+        />
 
-        <View className="mb-4">
-          <Text className="text-neutral-500 text-sm">Remaining Medication</Text>
-          <Text className="text-neutral-800 text-lg">{user.remainingMedication} days</Text>
-        </View>
+        {/* Current Plan */}
+        <SectionHeader title="Current Plan" />
+        <InfoCard
+          icon="medkit-outline"
+          title={user?.currentPlan || "Not Assigned"}
+          subtitle={`${user?.remainingMedication || 0} doses remaining`}
+        />
 
-        <View className="flex-row justify-between mb-4">
-          <View>
-            <Text className="text-neutral-500 text-sm">Status</Text>
-            <Text
-              className={`text-lg ${
-                user.status === 'active' ? 'text-green-500' : 'text-red-500'
-              }`}
-            >
-              {user.status.charAt(0).toUpperCase() + user.status.slice(1)}
-            </Text>
-          </View>
-          <View>
-            <Text className="text-neutral-500 text-sm">Billing</Text>
-            <Text
-              className={`text-lg ${
-                user.billingStatus === 'OK' ? 'text-green-500' : 'text-red-500'
-              }`}
-            >
-              {user.billingStatus}
-            </Text>
-          </View>
-        </View>
-      </View>
-
-
-      <Button title="View Shipment History" onPress={() => router.push('/history')} />
-      <Button title="Logout"  onPress={handleLogout} className="mt-4" />
-    </ScrollView>
+        <View className="pb-[100px]" />
+      </ScrollView>
+    </SafeAreaView>
   );
-};
-
-export default Dashboard;
+}
