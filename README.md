@@ -15,7 +15,7 @@ A modern, mobile-first patient dashboard built with Expo, React Native, and Type
 
 ---
 
-## 🏗️ Project Structure
+## Project Structure
 
 ```
 phoenixlabs/
