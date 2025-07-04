@@ -12,25 +12,26 @@
   },
   "dependencies": {
     "@hookform/resolvers": "^5.1.1",
-    "@react-native-async-storage/async-storage": "^2.2.0",
-    "@shopify/flash-list": "^1.8.3",
+    "@react-native-async-storage/async-storage": "2.1.2",
+    "@shopify/flash-list": "1.7.6",
     "@tanstack/react-query": "^5.81.5",
     "axios": "^1.10.0",
     "clsx": "^2.1.1",
     "date-fns": "^4.1.0",
-    "expo": "^53.0.12",
-    "expo-router": "^5.1.0",
+    "expo": "53.0.16",
+    "expo-router": "~5.1.2",
     "expo-status-bar": "~2.2.3",
     "lucide-react-native": "^0.523.0",
     "nativewind": "latest",
     "react": "19.0.0",
     "react-hook-form": "^7.59.0",
-    "react-native": "0.79.4",
+    "react-native": "0.79.5",
     "react-native-mmkv": "^2.10.1",
     "react-native-reanimated": "~3.17.4",
+    "react-native-reanimated-carousel": "^4.0.2",
     "react-native-safe-area-context": "5.4.0",
     "react-native-swiper": "^1.6.0",
-    "sentry-expo": "^7.2.0",
+    "sentry-expo": "~7.0.0",
     "tailwind-merge": "^3.3.1",
     "zod": "^3.25.67",
     "zustand": "^5.0.6"
@@ -46,6 +47,13 @@
     "tailwindcss": "^3.4.0",
     "typescript": "~5.8.3"
   },
-  "main": "./app/index.tsx",
-  "private": true
+  "main": "expo-router/entry",
+  "private": true,
+  "expo": {
+    "doctor": {
+      "reactNativeDirectoryCheck": {
+        "listUnknownPackages": false
+      }
+    }
+  }
 }

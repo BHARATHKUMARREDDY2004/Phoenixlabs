@@ -1,20 +1,45 @@
-// app/index.tsx
 import { Redirect } from 'expo-router';
-import 'expo-router/entry';
 import '../global.css';
 import { useAuthStore } from '@/stores/authStore';
 import { useEffect, useState } from 'react';
-import { ActivityIndicator, View } from 'react-native';
+import { ActivityIndicator, View, Text } from 'react-native';
 
 export default function App() {
   const [isLoading, setIsLoading] = useState(true);
-  const token = useAuthStore((state) => state.token);
+  const [error, setError] = useState<string | null>(null);
+  
+
+  let token = null;
+  try {
+    token = useAuthStore((state) => state.token);
+  } catch (err) {
+    console.error('Error accessing auth store:', err);
+    setError('Failed to access authentication data');
+  }
 
   useEffect(() => {
-    setTimeout(() => {
-      setIsLoading(false);
-    }, 500);
+    const initApp = async () => {
+      try {
+        await new Promise(resolve => setTimeout(resolve, 1000));
+        setIsLoading(false);
+      } catch (err) {
+        console.error('Error in app initialization:', err);
+        setError('App initialization failed');
+        setIsLoading(false);
+      }
+    };
+    
+    initApp();
   }, []);
+
+  if (error) {
+    return (
+      <View className="flex-1 items-center justify-center bg-white p-4">
+        <Text className="text-red-500 text-lg font-bold mb-2">Error</Text>
+        <Text className="text-center">{error}</Text>
+      </View>
+    );
+  }
 
   if (isLoading) {
     return (

@@ -4,6 +4,7 @@ import { useAuthStore } from "@/stores/authStore";
 import { Ionicons } from "@expo/vector-icons";
 import Button from "@/components/Button"; 
 import { showCustomAlert } from '@/components/Alert'; 
+import { router } from "expo-router";
 
 export default function Account() {
   const user = useAuthStore((state) => state.user);
@@ -17,6 +18,7 @@ export default function Account() {
         style: "destructive",
         onPress: () => {
           clearAuthData();
+          router.replace("/(auth)/login");
         },
       },
     ]);

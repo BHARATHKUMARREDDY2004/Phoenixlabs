@@ -12,16 +12,17 @@
       "tsconfigPaths": true
     },
     "plugins": [
-      "expo-router"
+      "expo-router",
+      "sentry-expo"
     ],
     "orientation": "portrait",
-    "icon": "./assets/logo.jpg",
+    "icon": "./assets/icon.png",
     "userInterfaceStyle": "light",
-"splash": {
-  "image": "./assets/logo.jpg",
-  "resizeMode": "contain",
-  "backgroundColor": "transparent"
-},
+    "splash": {
+      "image": "./assets/splash.png",
+      "resizeMode": "contain",
+      "backgroundColor": "#ffffff"
+    },
     "assetBundlePatterns": [
       "**/*"
     ],
@@ -32,18 +33,18 @@
         "ITSAppUsesNonExemptEncryption": false
       }
     },
-"android": {
-  "adaptiveIcon": {
-    "foregroundImage": "./assets/logo.jpg",
-    "resizeMode": "contain",
-    "backgroundColor": "transparent"
-  },
-      "package": "com.bharathkumarreddy2004.phoenixlabs"
+    "android": {
+      "adaptiveIcon": {
+        "foregroundImage": "./assets/adaptive-icon.png",
+        "backgroundColor": "#ffffff"
+      },
+      "package": "com.bharathkumarreddy2004.phoenixlabs",
+      "versionCode": 1
     },
     "extra": {
       "router": {},
       "eas": {
-        "projectId": "e3d4ebb0-ce9e-4c21-8097-29725fac361b"
+        "projectId": "a09f85af-13e4-41c8-a965-2ffd13f60bfc"
       }
     },
     "owner": "bharathkumarreddy2004"
